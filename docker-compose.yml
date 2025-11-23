@@ -140,7 +140,6 @@ services:
 
   seeder:
     image: openproject/openproject:${TAG:-16-slim}
-    restart: unless-stopped
     environment:
       OPENPROJECT_HTTPS: "${OPENPROJECT_HTTPS:-true}"
       OPENPROJECT_HOST__NAME: "${OPENPROJECT_HOST__NAME:-localhost:8080}"
