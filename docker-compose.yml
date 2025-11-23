@@ -6,17 +6,10 @@ volumes:
   pgdata:
   opdata:
 
-x-op-restart-policy: &restart_policy
-  restart: unless-stopped
-x-op-image: &image
-  image: openproject/openproject:${TAG:-16-slim}
-x-op-app: &app
-  <<: [*image, *restart_policy]
-
 services:
   db:
     image: postgres:13
-    <<: *restart_policy
+    restart: unless-stopped
     stop_grace_period: "3s"
     volumes:
       - "${PGDATA:-pgdata}:/var/lib/postgresql/data"
@@ -28,7 +21,7 @@ services:
 
   cache:
     image: memcached
-    <<: *restart_policy
+    restart: unless-stopped
     networks:
       - backend
 
@@ -38,7 +31,7 @@ services:
       args:
         APP_HOST: web
     image: openproject/proxy
-    <<: *restart_policy
+    restart: unless-stopped
     # ports:
     #   - "${PORT:-8080}:80"
     depends_on:
@@ -47,7 +40,8 @@ services:
       - frontend
 
   web:
-    <<: *app
+    image: openproject/openproject:${TAG:-16-slim}
+    restart: unless-stopped
     environment:
       OPENPROJECT_HTTPS: "${OPENPROJECT_HTTPS:-true}"
       OPENPROJECT_HOST__NAME: "${OPENPROJECT_HOST__NAME:-localhost:8080}"
@@ -91,7 +85,8 @@ services:
       AUTOHEAL_INTERVAL: 30
 
   worker:
-    <<: *app
+    image: openproject/openproject:${TAG:-16-slim}
+    restart: unless-stopped
     environment:
       OPENPROJECT_HTTPS: "${OPENPROJECT_HTTPS:-true}"
       OPENPROJECT_HOST__NAME: "${OPENPROJECT_HOST__NAME:-localhost:8080}"
@@ -117,7 +112,8 @@ services:
       - seeder
 
   cron:
-    <<: *app
+    image: openproject/openproject:${TAG:-16-slim}
+    restart: unless-stopped
     environment:
       OPENPROJECT_HTTPS: "${OPENPROJECT_HTTPS:-true}"
       OPENPROJECT_HOST__NAME: "${OPENPROJECT_HOST__NAME:-localhost:8080}"
@@ -143,7 +139,8 @@ services:
       - seeder
 
   seeder:
-    <<: *app
+    image: openproject/openproject:${TAG:-16-slim}
+    restart: unless-stopped
     environment:
       OPENPROJECT_HTTPS: "${OPENPROJECT_HTTPS:-true}"
       OPENPROJECT_HOST__NAME: "${OPENPROJECT_HOST__NAME:-localhost:8080}"
