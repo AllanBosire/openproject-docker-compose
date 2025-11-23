@@ -26,6 +26,8 @@ x-op-app: &app
     IMAP_ENABLED: "${IMAP_ENABLED:-false}"
   volumes:
     - "${OPDATA:-opdata}:/var/openproject/assets"
+  env_file:
+    - .env
 
 services:
   db:
