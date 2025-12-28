@@ -55,7 +55,7 @@ services:
       # set to true to enable the email receiving feature. See ./docker/cron for more options
       IMAP_ENABLED: "${IMAP_ENABLED:-false}"
     volumes:
-      - "${OPDATA:-opdata}:/var/openproject/assets"
+      - "opdata:/var/openproject/assets"
     env_file:
       - .env
     command: "./docker/prod/web"
@@ -127,7 +127,7 @@ services:
       # set to true to enable the email receiving feature. See ./docker/cron for more options
       IMAP_ENABLED: "${IMAP_ENABLED:-false}"
     volumes:
-      - "${OPDATA:-opdata}:/var/openproject/assets"
+      - "opdata:/var/openproject/assets"
     env_file:
       - .env
     command: "./docker/prod/cron"
@@ -153,7 +153,7 @@ services:
       # set to true to enable the email receiving feature. See ./docker/cron for more options
       IMAP_ENABLED: "${IMAP_ENABLED:-false}"
     volumes:
-      - "${OPDATA:-opdata}:/var/openproject/assets"
+      - "opdata:/var/openproject/assets"
     env_file:
       - .env
     command: "./docker/prod/seeder"
