@@ -12,7 +12,7 @@ services:
     restart: unless-stopped
     stop_grace_period: "3s"
     volumes:
-      - "${PGDATA:-pgdata}:/var/lib/postgresql/data"
+      - "pgdata:/var/lib/postgresql/data"
     environment:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-p4ssw0rd}
       POSTGRES_DB: openproject
@@ -100,7 +100,7 @@ services:
       # set to true to enable the email receiving feature. See ./docker/cron for more options
       IMAP_ENABLED: "${IMAP_ENABLED:-false}"
     volumes:
-      - "${OPDATA:-opdata}:/var/openproject/assets"
+      - "opdata:/var/openproject/assets"
     env_file:
       - .env
     command: "./docker/prod/worker"
