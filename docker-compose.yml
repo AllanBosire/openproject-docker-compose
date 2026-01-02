@@ -29,17 +29,17 @@ services:
     build:
       context: ./proxy
       args:
-        APP_HOST: web
+        APP_HOST: open-web
     image: openproject/proxy
     restart: unless-stopped
     # ports:
     #   - "${PORT:-8080}:80"
     depends_on:
-      - web
+      - open-web
     networks:
       - frontend
 
-  web:
+  open-web:
     image: openproject/openproject:${TAG:-16-slim}
     restart: unless-stopped
     environment:
